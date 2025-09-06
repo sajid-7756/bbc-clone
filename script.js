@@ -114,13 +114,46 @@ function showNewsCategories(newses) {
   //   });
 }
 
+function loadNewsDetails(e) {
+  const id = e.target.parentNode.id;
+  console.log(id);
+
+  const url = `https://news-api-fs.vercel.app/api/news/${id}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      showNewsDetails(data.article);
+    })
+    .catch((error) => {
+      throw new Error("Error: ", error);
+    });
+}
+
+function showNewsDetails(article) {
+  console.log(article);
+  // newsDetailsModal.showModal()
+
+  modalContainer.innerHTML = `
+       <div class="modal-box">
+          <h3 class="text-lg font-bold">${article.title}</h3>
+          <img src="${article.images[0].url}" alt="">
+          <p class="py-4">${article.content}</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+  `;
+}
+
 newsContainer.addEventListener("click", handleNewsContainer);
 function handleNewsContainer(e) {
   if (e.target.id === "bookmark") {
     bookmarkContainer.appendChild(e.target.parentNode.parentNode);
   }
   if (e.target.id === "modal") {
-    handleNewsDetails(e);
+    loadNewsDetails(e);
   }
 }
 
@@ -157,55 +190,5 @@ function showEmpty() {
   `;
 }
 
-function handleNewsDetails(e) {
-  const id = e.target.parentNode.id;
-  console.log(id);
-
-  const url = `https://news-api-fs.vercel.app/api/news/${id}`;
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      showNewsDetails(data.article);
-    })
-    .catch((error) => {
-      throw new Error("Error: ", error);
-    });
-}
-
-function showNewsDetails(article) {
-  console.log(article);
-  // newsDetailsModal.showModal()
-
-  modalContainer.innerHTML = `
-       <div class="modal-box">
-          <h3 class="text-lg font-bold">${article.title}</h3>
-          <img src="${article.images[0].url}" alt="">
-          <p class="py-4">${article.content}</p>
-          <div class="modal-action">
-            <form method="dialog">
-              <button class="btn">Close</button>
-            </form>
-          </div>
-        </div>
-  `
-}
-// [
-//     {
-//         "url": "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/2bf2/live/75aca2a0-8b09-11f0-9a92-61c69444c65a.jpg.webp",
-//         "caption": "No caption available"
-//     },
-//     {
-//         "url": "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/6d93/live/47c7a0b0-8b13-11f0-9cf6-cbf3e73ce2b9.jpg.webp",
-//         "caption": "No caption available"
-//     },
-//     {
-//         "url": "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/4f9a/live/cf45e830-8b13-11f0-b7cb-a948b12ba583.jpg.webp",
-//         "caption": "No caption available"
-//     },
-//     {
-//         "url": "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/4e26/live/ff1fd0c0-8b13-11f0-84c8-99de564f0440.jpg.webp",
-//         "caption": "No caption available"
-//     }
-// ]
 loadCategories();
 loadNewsByCategories("main");
