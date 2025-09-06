@@ -1,0 +1,8 @@
+* {
+  font-family: "Noto Serif Bengali", serif;
+}
+
+.default-width {
+    max-width: 50%;
+    margin: 0 auto;
+}
