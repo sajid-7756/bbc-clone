@@ -116,7 +116,6 @@ function showNewsCategories(newses) {
 
 function loadNewsDetails(e) {
   const id = e.target.parentNode.id;
-  console.log(id);
 
   const url = `https://news-api-fs.vercel.app/api/news/${id}`;
   fetch(url)
@@ -130,7 +129,6 @@ function loadNewsDetails(e) {
 }
 
 function showNewsDetails(article) {
-  console.log(article);
   // newsDetailsModal.showModal()
 
   modalContainer.innerHTML = `
